@@ -7,7 +7,7 @@ A tool that transforms images into text-based art by adjusting text density and 
 # How to run?
 After installing dependencies, simply execute `python main.py`.
 
-This will launch the window like below:
+This will launch the window like below:  
 ![Click to see the image](https://i.imgur.com/6nlcTTV.png)
 You can add your own text and select your own image. Default font size might not look good, you will have to experiment to find the ideal size.
 
