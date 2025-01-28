@@ -1,0 +1,1 @@
+pyinstaller --onedir main.py --add-data="./UI/*;./UI/" --add-data="./fonts/*;./fonts/" --noconfirm --noconsole

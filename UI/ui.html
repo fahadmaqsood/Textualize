@@ -1,0 +1,324 @@
+<style>
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+    }
+
+    textarea {
+        width: calc(100% - 16px);
+        height: 30vw;
+        font-family: Arial;
+        font-size: 15;
+        margin: 8px;
+    }
+
+    select,
+    input {
+        padding: 5px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        width: 170px;
+    }
+
+    table {
+        width: 100%;
+    }
+
+    table td {
+        padding-right: 30px;
+        padding-left: 30px;
+        width: 50%;
+    }
+
+    table td:first-child {
+        text-align: right;
+        border-right: 1px solid #ccc5c5;
+
+    }
+
+    table td:nth-child(2) {
+        text-align: left;
+    }
+
+    #submit-btn-container {
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    button#submit[disabled] {
+        background-color: #303030;
+        color: #acacac;
+        cursor: wait;
+    }
+
+    button#submit {
+        background-color: black;
+        color: white;
+        padding: 5px;
+        margin: 5px;
+        text-align: center;
+        border: 0;
+        border-radius: 25px;
+        width: 130px;
+        height: 35px;
+        outline: 0;
+        cursor: pointer;
+    }
+
+    progress {
+        position: absolute;
+        bottom: 10;
+        left: 10;
+    }
+
+    #output-img-container {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        background-color: white;
+        text-align: center;
+        display: none;
+    }
+
+    #output-img-container #output-img-toolbar {
+        text-align: right;
+        font-size: 30px;
+        padding-right: 15px;
+        padding-left: 15px;
+        background: transparent;
+        position: fixed;
+        top: 10px;
+        right: 0;
+        background: black;
+        color: white;
+        border-top-left-radius: 18px;
+        border-bottom-left-radius: 18px;
+        padding-bottom: 2px;
+    }
+
+    #output-img-container #output-img-toolbar>div {
+        display: inline-block;
+        vertical-align: middle;
+        cursor: pointer;
+    }
+
+    #output-img-container #output-img-toolbar>div:first-child {
+        font-size: 21px;
+        margin-right: 10px;
+
+    }
+
+
+
+    #output-img-container img {
+        height: 100%;
+        width: auto;
+        text-align: center;
+    }
+</style>
+
+
+<body>
+
+    <textarea
+        placeholder="Type your text here...">hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? hello, how are you? </textarea>
+
+    <br />
+    <br />
+
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    Choose your font: <br />
+
+                    <select id="font-family-input">
+
+                    </select>
+
+                    <br />
+
+                    <label for="font-size-input">Type font size:</label> <br />
+                    <input type="number" value="25" step="1" id="font-size-input" />
+                </td>
+
+                <td>
+                    <label for="img-input">Select image:</label> <br />
+                    <input type="file" id="img-input" name="img" accept="image/*" style="padding: 0!important">
+                    <input type="hidden" id="hidden" />
+                    <br /> <br />
+
+                    <input type="checkbox" id="remove-background-checkbox" style="width:auto; display: none" />
+                    <label for="remove-background-checkbox" style="display: none">Remove Image Background</label>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div id="submit-btn-container">
+        <button id="submit">Let's Go</button>
+    </div>
+
+    <progress id="progressbar" value="0" max="100"></progress>
+
+    <canvas id="canvas" style="display: none"></canvas>
+
+
+    <div id="output-img-container">
+
+        <div id="output-img-toolbar">
+            <div onclick="WebChannel.save_output_image()">
+                Save
+            </div>
+            <div onclick="this.parentElement.parentElement.style.display='none'">
+                &times;
+            </div>
+        </div>
+
+        <img id="output-img" />
+
+
+    </div>
+
+
+
+    <script src="qrc:///qtwebchannel/qwebchannel.js"></script>
+    <script>
+        const text_input = document.querySelector("textarea");
+        const font_family_input = document.querySelector("#font-family-input");
+        const font_size_input = document.querySelector("#font-size-input");
+        const image_input = document.querySelector("#img-input");
+        const hidden = document.getElementById("hidden");
+        const remove_background_checkbox = document.querySelector("#remove-background-checkbox");
+        const submit_btn = document.querySelector("#submit");
+        const progressBar = document.querySelector("#progressbar");
+        const outputImgContainer = document.querySelector("#output-img-container");
+        const outputImg = document.querySelector("#output-img");
+
+        // font_size_input.addEventListener("input", function (e) {
+        //     text_input.style.fontSize = font_size_input.value;
+        // });
+
+        // font_family_input.addEventListener("change", (e) => {
+        //     text_input.style.fontFamily = font_family_input.value;
+        // });
+
+        var WebChannel = null;
+        new QWebChannel(qt.webChannelTransport, function (channel) {
+            WebChannel = channel.objects.WebChannel;
+        });
+
+        File.prototype.convertToBase64 = function (callback) {
+            var reader = new FileReader();
+            reader.onloadend = function (e) {
+                callback(e.target.result, e.target.error);
+            };
+            reader.readAsDataURL(this);
+        };
+
+        image_input.addEventListener("change", function (e) {
+            image_input.files[0].convertToBase64((base64) => {
+                (async () => {
+                    hidden.value = base64;
+                    const imageDimensions = await imageSize(base64);
+
+                    console.info(imageDimensions); // {width: 1337, height: 42}
+                    // WebChannel.print(imageDimensions);
+
+                    if (imageDimensions.width > 1200) {
+                        aspect_ratio = imageDimensions.height / imageDimensions.width;
+                        new_width = 1200;
+                        new_height = aspect_ratio * new_width;
+
+                        document.getElementById('canvas').height = new_height;
+                        document.getElementById('canvas').width = new_width;
+
+                        WebChannel.print("new width: " + new_width);
+                        WebChannel.print("new height: " + new_height);
+
+                        createImageBitmap(
+                            imageDimensions.img,
+                            {
+                                resizeWidth: new_width,
+                                resizeHeight: new_height,
+                                resizeQuality: 'high'
+                            }
+                        ).then(imageBitmap => {
+                            document.getElementById('canvas').getContext('2d').drawImage(imageBitmap, 0, 0);
+
+                            hidden.value = document.getElementById('canvas').toDataURL();
+                        }
+                        );
+
+                        font_size_input.value = (1.5 * new_width) / 100; // 1.5 vw
+                    } else {
+                        font_size_input.value = (1.5 * imageDimensions.width) / 100; // 1.5 vw
+                    }
+                })();
+            });
+        });
+
+        submit_btn.addEventListener("click", function () {
+            if ([undefined, null, ""].includes(image_input.files[0])) {
+                alert("Please choose an image first.");
+                return;
+            } else if (text_input.value.trim() == "") {
+                alert("Please write some text in the text field.");
+                return;
+            }
+
+            this.setAttribute("disabled", "disabled");
+
+            // image_input.files[0].convertToBase64(function (base64) {
+            WebChannel.make_image(text_input.value, font_family_input.value, font_size_input.value, remove_background_checkbox.checked, hidden.value);
+            // });
+        });
+
+
+        function setupFonts(options) {
+            WebChannel.print(options)
+            font_family_input.innerHTML += options;
+        }
+
+
+        function showImage(base64) {
+            outputImgContainer.style.display = 'block';
+            outputImg.src = "data:image/png;base64," + base64;
+        }
+
+
+
+        // async/promise function for retrieving image dimensions for a URL
+        function imageSize(url) {
+            const img = document.createElement("img");
+
+            const promise = new Promise((resolve, reject) => {
+                img.onload = () => {
+                    // Natural size is the actual image size regardless of rendering.
+                    // The 'normal' `width`/`height` are for the **rendered** size.
+                    const width = img.naturalWidth;
+                    const height = img.naturalHeight;
+
+                    WebChannel.print(width);
+                    WebChannel.print(height);
+
+                    // Resolve promise with the width and height
+                    resolve({ img, width, height });
+                };
+
+                // Reject promise on error
+                img.onerror = reject;
+            });
+
+            // Setting the source makes it start downloading and eventually call `onload`
+            img.src = url;
+
+            return promise;
+        }
+    </script>
+</body>
